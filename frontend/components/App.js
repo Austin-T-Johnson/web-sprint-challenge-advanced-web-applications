@@ -19,7 +19,7 @@ export default function App() {
 
   // ✨ Research `useNavigate` in React Router v.6
   const navigate = useNavigate()
-  const redirectToLogin = () => { /* ✨ implement */ }
+  const redirectToLogin = () => {navigate("/")}
   const redirectToArticles = () => { /* ✨ implement */ }
 
   const logout = () => {
@@ -28,6 +28,11 @@ export default function App() {
     // and a message saying "Goodbye!" should be set in its proper state.
     // In any case, we should redirect the browser back to the login screen,
     // using the helper above.
+    
+    localStorage.removeItem("token")
+    setMessage("Goodbye!")
+    redirectToLogin()
+
   }
 
   const login = (values) => {
@@ -82,24 +87,24 @@ export default function App() {
     // The flow is very similar to the `getArticles` function.
     // You'll know what to do! Use log statements or breakpoints
     // to inspect the response from the server.
-    axiosWithAuth().post("/articles", article)
-    .then(res => {
-        console.log("POST ARTICLE:", res)
-    })
-    .catch(err => {
-        console.error(err)
-    })
+    // axiosWithAuth().post("/articles", article)
+    // .then(res => {
+    //     console.log("POST ARTICLE:", res)
+    // })
+    // .catch(err => {
+    //     console.error(err)
+    // })
 
   }
 
   const updateArticle = ({ article_id, article }) => {
     // ✨ implement
     // You got this!
-    axiosWithAuth().put(`/articles/${article_id}`, article)
-    .then(res => {
-        console.log("UPDATE:", res)
-    })
-    .catch(err => console.error(err))
+    // axiosWithAuth().put(`/articles/${article_id}`, article)
+    // .then(res => {
+    //     console.log("UPDATE:", res)
+    // })
+    // .catch(err => console.error(err))
     
   }
 

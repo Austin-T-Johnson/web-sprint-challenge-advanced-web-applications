@@ -31,7 +31,7 @@ export default function Articles(props) {
                   <p>Topic: {art.topic}</p>
                 </div>
                 <div>
-                  <button disabled={false} onClick={currentArticleId}>Edit</button>
+                  <button disabled={false} onClick={Function.prototype}>Edit</button>
                   <button disabled={false} onClick={Function.prototype}>Delete</button>
                 </div>
               </div>
