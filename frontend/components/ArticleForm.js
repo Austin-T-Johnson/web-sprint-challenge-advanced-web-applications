@@ -7,15 +7,21 @@ export default function ArticleForm(props) {
     const [values, setValues] = useState(initialFormValues)
     // ✨ where are my props? Destructure them here
     const { postArticle, updateArticle, currentArticle, setCurrentArticleId } = props
+   
+   
 
     useEffect(() => {
         // ✨ implement
         // Every time the `currentArticle` prop changes, we should check it for truthiness:
         // if it's truthy, we should set its title, text and topic into the corresponding
         // values of the form. If it's not, we should reset the form back to initial values.
-       
+       if(currentArticle) {
+           setValues(currentArticle)
+       } else {
+           setValues(initialFormValues)
+       }
 
-    }, [])
+    }, [currentArticle])
 
     const onChange = evt => {
         const { id, value } = evt.target
@@ -27,8 +33,15 @@ export default function ArticleForm(props) {
         // ✨ implement
         // We must submit a new post or update an existing one,
         // depending on the truthyness of the `currentArticle` prop.
-        postArticle(values)
-        setValues(initialFormValues)
+        if(currentArticle) {
+            updateArticle(values.article_id, values)
+            setValues(initialFormValues)
+            setCurrentArticleId(null)
+        } else {
+            postArticle(values)
+            setValues(initialFormValues)
+        } 
+        
     }
 
     const isDisabled = () => {
@@ -72,7 +85,7 @@ export default function ArticleForm(props) {
                 <option value="Node">Node</option>
             </select>
             <div className="button-group">
-                <button disabled={isDisabled()} id="submitArticle">Submit</button>
+                <button  disabled={isDisabled()} id="submitArticle">Submit</button>
                 <button onClick={Function.prototype}>Cancel edit</button>
             </div>
         </form>

@@ -23,6 +23,9 @@ export default function App() {
     const redirectToLogin = () => { navigate("/") }
     const redirectToArticles = () => { navigate("/") }
 
+    
+    
+
     const logout = () => {
         // ✨ implement
         // If a token is in local storage it should be removed,
@@ -105,16 +108,20 @@ export default function App() {
     const updateArticle = (article_id, article) => {
         // ✨ implement
         // You got this!
+        setSpinnerOn(true)
         axiosWithAuth().put(`/articles/${article_id}`, article)
             .then(res => {
                 console.log("UPDATE:", res)
-                // setArticles(articles.map(art => {
-                //     if(art.article_id === res.data.article_id) {
-                //         return res.data
-                //     } else {
-                //         return art
-                //     }
-                // }))
+                setArticles(articles.map(art => {
+                    if(art.article_id === res.data.article.article_id) {
+                        return res.data.article
+                    } else {
+                        return art
+                    }
+                }))
+                setMessage(res.data.message)
+                setSpinnerOn(false)
+                
 
             })
             .catch(err => console.error(err))
@@ -163,7 +170,7 @@ export default function App() {
                                 setCurrentArticleId={setCurrentArticleId}
                                 currentArticleId={currentArticleId}
                                 deleteArticle={deleteArticle}
-                                updateArticle={updateArticle}
+                               
                             />
                         </AuthRoute>
                     } />
