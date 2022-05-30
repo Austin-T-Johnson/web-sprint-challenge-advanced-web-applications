@@ -69,7 +69,7 @@ export default function App() {
         setSpinnerOn(true)
         axiosWithAuth().get("/articles")
             .then(res => {
-               
+
                 setArticles(res.data.articles)
                 setMessage(res.data.message)
                 setSpinnerOn(false)
@@ -88,31 +88,49 @@ export default function App() {
         // to inspect the response from the server.
         setSpinnerOn(true)
         axiosWithAuth().post("/articles", values)
-        .then(res => {
-            console.log("POST ARTICLE:", res)
-           setMessage(res.data.message)
-           setSpinnerOn(false)
-           
-        })
-        .catch(err => {
-            console.error(err)
-        })
+            .then(res => {
+                console.log("POST ARTICLE:", res)
+                setArticles([...articles, res.data.article])
+                setMessage(res.data.message)
+                setSpinnerOn(false)
+
+            })
+            .catch(err => {
+                console.error(err)
+            })
 
     }
 
-    const updateArticle = ({ article_id, article }) => {
+    const updateArticle = (article_id, article) => {
         // ✨ implement
         // You got this!
-        // axiosWithAuth().put(`/articles/${article_id}`, article)
-        // .then(res => {
-        //     console.log("UPDATE:", res)
-        // })
-        // .catch(err => console.error(err))
+        axiosWithAuth().put(`/articles/${article_id}`, article)
+            .then(res => {
+                console.log("UPDATE:", res)
+                // setArticles(articles.map(art => {
+                //     if(art.article_id === res.data.article_id) {
+                //         return res.data
+                //     } else {
+                //         return art
+                //     }
+                // }))
+
+            })
+            .catch(err => console.error(err))
 
     }
 
     const deleteArticle = article_id => {
         // ✨ implement
+        setSpinnerOn(true)
+        axiosWithAuth().delete(`/articles/${article_id}`)
+            .then(res => {
+                console.log("DELETE:", res)
+                setArticles(articles.filter(art => art.article_id !== article_id))
+                setMessage(res.data.message)
+                setSpinnerOn(false)
+            })
+            .catch(err => console.error(err))
     }
 
     return (
@@ -143,7 +161,9 @@ export default function App() {
                                 articles={articles}
                                 setCurrentArticleId={setCurrentArticleId}
                                 currentArticleId={currentArticleId}
-                                deleteArticle={deleteArticle} />
+                                deleteArticle={deleteArticle}
+                                updateArticle={updateArticle}
+                            />
                         </>
                     } />
                 </Routes>
