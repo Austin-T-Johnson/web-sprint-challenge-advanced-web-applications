@@ -6,6 +6,7 @@ import Message from './Message'
 import ArticleForm from './ArticleForm'
 import Spinner from './Spinner'
 import { axiosWithAuth } from '../axios/index'
+import { AuthRoute } from './AuthRoute'
 
 const articlesUrl = 'http://localhost:9000/api/articles'
 const loginUrl = 'http://localhost:9000/api/login'
@@ -148,7 +149,7 @@ export default function App() {
                 <Routes>
                     <Route path="/" element={<LoginForm login={login} />} />
                     <Route path="/articles" element={
-                        <>
+                        <AuthRoute>
                             <ArticleForm
                                 postArticle={postArticle}
                                 updateArticle={updateArticle}
@@ -164,7 +165,7 @@ export default function App() {
                                 deleteArticle={deleteArticle}
                                 updateArticle={updateArticle}
                             />
-                        </>
+                        </AuthRoute>
                     } />
                 </Routes>
                 <footer>Bloom Institute of Technology 2022</footer>
